@@ -1,13 +1,16 @@
+import sys
+
 from fastapi import FastAPI
 
-app = FastAPI()
+from src.app.routers.reservations import router as reservations_router
+from src.app.routers.tables import router as tables_router
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app = FastAPI(
+    title='Booking service',
+    version='0.1'
+)
 
+app.include_router(reservations_router)
+app.include_router(tables_router)
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
